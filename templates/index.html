@@ -1,0 +1,1126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learning & Development</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css">  <style type="text/css">
+      .submitbtn{
+        width: 100%;
+      }
+      .lead{
+        color: #2c2c8b;
+        font-weight: 900;  
+      }
+      .training_radio, .certification_radio, .report_radio{
+        color: rgb(186, 18, 190);
+      }
+      .main_border{
+        padding: 70px;
+        border-width: 3px !important;
+        border-color: #615891 !important;
+      }
+      * {
+        font-family: emoji;
+      }    
+      .accordion-body{
+        overflow: scroll;
+      } 
+      .frame_border{
+        padding: 20px;
+        border-width: 2px !important;
+        border-color: #b8b5ca !important;
+      }
+      .input-group-text {
+        border-radius: 0 !important;
+        padding: 0!important;
+      }
+      .edit-icon{
+        border-radius: 0 !important;
+      }
+      input[readonly] {
+          background-color: #f4f4f4;
+      }   
+      input[type="radio"] {
+        /* Add if not using autoprefixer */
+        -webkit-appearance: none;
+        /* Remove most all native input styles */
+        appearance: none;
+        /* For iOS < 15 */
+        background-color: var(--form-background);
+        /* Not removed via appearance */
+        font: inherit;
+        color: currentColor;
+        width: 1.15em;
+        height: 1.15em;
+        border: 0.15em solid currentColor;
+        border-radius: 50%;
+        transform: translateY(-0.075em);
+
+        display: grid;
+        place-content: center;
+      }
+
+      input[type="radio"]::before {
+        content: "";
+        width: 0.65em;
+        height: 0.65em;
+        border-radius: 50%;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+        box-shadow: inset 1em 1em var(--form-control-color);
+        /* Windows High Contrast Mode */
+        background-color: CanvasText;
+      }
+
+      input[type="radio"]:checked::before {
+        transform: scale(1);
+      }
+
+      input[type="radio"]:focus {
+        outline: max(2px, 0.15em) solid currentColor;
+        outline-offset: max(2px, 0.15em);
+      }         
+
+      .form-check-input:checked {
+          background-color: #ffffff;
+          border-color: #3770c3;
+      }
+      .form-check-inline {
+          padding-right: 30px;
+      }
+    </style>
+  </head>
+  <body>
+
+<div class="container">
+      <div class="row">
+        <!-- <div class="col-md-2 order-md-1"></div> -->
+        <div class="col-md-12 order-md-1 mt-4 border border-info rounded main_border">
+
+          <div class="row mt-4 text-center">
+
+            <div class="col-md-2 mb-3">
+            <img class="d-block mx-auto mb-4" src="{{url_for('static', filename='images/logo_intellect.png')}}" alt="" width="180" height="72">              
+            </div> 
+            <div class="col-md-8 mb-3"></div> 
+            <div class="col-md-2 mb-3">
+            <img class="d-block mx-auto mb-4" src="{{url_for('static', filename='images/logo_test_practice.png')}}" alt="" width="180" height="72">              
+            </div>                   
+            <p class="lead">Training and Certification</p>
+          </div>          
+          <!--<div class="alert alert-danger" role="alert">
+            <strong>Error!</strong> You should check in on some of those fields below.
+          </div>-->
+          <form class="needs-validation mb-3" novalidate id="input_form">
+
+
+
+            <div class="mb-3 border border-info rounded frame_border text-center">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" checked type="radio" name="form_radio" id="certification_radio" value="certification_radio">
+                  <label class="form-check-label certification_radio" for="certification_radio">Certification</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="form_radio" id="training_radio" value="training_radio">
+                  <label class="form-check-label training_radio" for="training_radio">Training</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="form_radio" id="report_radio" value="report_radio">
+                  <label class="form-check-label report_radio" for="report_radio">Report</label>
+                </div>        
+                <input type="hidden" name="radio_option" id="radio_option" value="certification">
+            </div>
+
+            <div class="border border-info rounded frame_border mb-4 training_form certification_form">
+
+              <div class="row certification_form training_form ">
+                <div class="col-md-12 mb-3">
+                  <label for="empid">Employee ID</label>
+                  <input type="text" class="form-control" id="empid" placeholder="" value="" required>
+                  <div class="invalid-feedback">
+                    Please Enter Employee ID
+                  </div>
+                </div>
+              </div>
+
+              <div class="row certification_form training_form">
+                <div class="col-md-6 mb-3">
+                  <label for="empname">Employee name</label>
+                  <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="empname" placeholder="" value="" required="" readonly>
+                    <div class="input-group-text">
+                      <button type="button" class="btn name-edit"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                      </button>
+                    </div>                    
+                    <div class="invalid-feedback">
+                      Please Enter Employee Name
+                    </div>                     
+                  </div>                  
+
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="grade">Grade</label>
+                  <div class="input-group mb-2">
+                  <input type="text" class="form-control" id="grade" placeholder="" value="" required="" readonly>
+                    <div class="input-group-text">
+                      <button type="button" class="btn grade-edit"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                      </button>
+                    </div>                     
+                  <div class="invalid-feedback">
+                    Please Enter Employee Grade
+                  </div>
+                  </div> 
+                </div>              
+              </div>
+
+              <div class="row certification_form training_form">
+                <div class="col-md-6 mb-3">
+                  <label for="project">Project</label>
+                  <div class="input-group mb-2">
+                  <input type="text" class="form-control" id="project" placeholder="" value="" required="required" readonly>
+                  <div class="input-group-text">
+                    <button type="button" class="btn project-edit"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                    </button>
+                  </div>                    
+                  <div class="invalid-feedback">
+                    Please Enter Project Name
+                  </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="rmanager">Reporting manager</label>
+                  <div class="input-group mb-2">
+                  <input type="text" class="form-control" id="rmanager" placeholder="" value="" required="" readonly>
+                  <div class="input-group-text">
+                    <button type="button" class="btn manager-edit"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                    </button>
+                  </div>                    
+                  <div class="invalid-feedback">
+                    Please Enter Reporting manager
+                  </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="certification_form border border-info rounded frame_border "> 
+              <div class="row">
+                <div class="col-md-6 mb-3">              
+                  <select id="certification_option" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Certification</option>
+                    {% for row in certification_list %}
+                        <option value="{{row['certifications']}}">{{row['certifications']}}</option>
+                    {% endfor %}                    
+                    
+                  </select> 
+                  <div class="invalid-feedback">Please select a valid certification.</div>      
+                </div>
+                <div class="col-md-6 mb-3">              
+                  <select id="certification_status" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Status</option>
+                    <option value="Completed">Completed</option>
+                    <option value="In-progress">In-progress</option>
+                    <option value="Road Map">Road Map</option>
+                  </select>        
+                  <div class="invalid-feedback">Please select a valid status.</div>                 
+                </div>     
+              </div>
+              <div class="mb-3">
+                <label for="cname">Certification Name</label>
+                <input type="text" class="form-control" id="cname" required>
+                <div class="invalid-feedback">
+                  Please Enter Certification Name.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="iname">Institution Name</label>
+                <input type="text" class="form-control" id="iname" required>
+                <div class="invalid-feedback">
+                  Please Enter Institution Name
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 mb-3">    
+                  <label for="intel">Before Intellect/In Intellect</label>          
+                  <select id="intellect" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Intellect</option>
+                    <option value="Before Intellect">Before Intellect</option>
+                    <option value="In Intellect">In Intellect</option>
+                  </select>        
+                  <div class="invalid-feedback">Please select a valid option.</div>                  
+                </div>
+                <div class="col-md-4 mb-3">              
+                  <label for="year">Completion Year</label>
+                  <select id="year" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Completion Year</option>                    
+                  </select>        
+                  <div class="invalid-feedback">
+                    Please Enter Completion Year
+                  </div>                                 
+                </div> 
+                <div class="col-md-4 mb-3">              
+                  <label for="quarter">Quarter</label>
+                  <select id="quarter" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Quarter</option>
+                    <option value="Q1">Q1</option>
+                    <option value="Q2">Q2</option>
+                    <option value="Q3">Q3</option>
+                    <option value="Q4">Q4</option>
+                  </select>                     
+                  <div class="invalid-feedback">
+                    Please Enter Quarter Details
+                  </div>  
+
+                </div>                   
+              </div>
+              <div class="row">
+                <div class="col-md-4 mb-3">    
+                  <label for="category">Category</label>
+                  <select id="category" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Category</option>
+                    {% for row in categories %}
+                        <option value="{{row['category']}}">{{row['category']}}</option>
+                    {% endfor %}                    
+                  </select>                    
+                  <div class="invalid-feedback">
+                    Please Enter Certification Category
+                  </div>        
+                </div>
+                <div class="col-md-4 mb-3">              
+                  <label for="sponsored">Sponsored By</label>
+                  <select id="sponsored" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Sponsor</option>
+                    <option value="Self">Self</option>
+                    <option value="Company">Company</option>
+                  </select>                    
+                  <div class="invalid-feedback">
+                    Please Enter Sponsor Details
+                  </div>                                 
+                </div> 
+                <div class="col-md-4 mb-3">              
+                  <label for="type">Internal / External</label>
+                  <select id="type" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Type</option>
+                    <option value="Internal">Internal</option>
+                    <option value="External">External</option>
+                  </select>                  
+                  <div class="invalid-feedback">Please select a valid option.</div>                  
+                </div>                   
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="cost">Cost(INR)</label>
+                  <input type="number" class="form-control" id="cost" placeholder="" value="" required="">
+                  <div class="invalid-feedback">
+                    Please Enter Certification Cost
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="expiry">Valid Till</label>
+                  <select id="expiry" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Expiry Year</option>                    
+                  </select>        
+                  <div class="invalid-feedback">
+                    Please Enter Expiration Details
+                  </div>
+                </div>
+              </div>  
+            </div> 
+            <div class="training_form border border-info rounded frame_border "> 
+              <div class="row">
+                <div class="col-md-6 mb-3">       
+                  <select id="training_option" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Training</option>
+                    {% for row in training_list %}
+                        <option value="{{row['training']}}">{{row['training']}}</option>
+                    {% endfor %}                    
+                  </select>  
+                  <div class="invalid-feedback">
+                    Please Choose Training
+                  </div>                                          
+                </div>
+                <div class="col-md-6 mb-3">              
+                  <select id="training_status" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Status</option>
+                    <option value="Completed">Completed</option>
+                    <option value="In-progress">In-progress</option>
+                    <option value="Road Map">Road Map</option>
+                  </select>        
+                  <div class="invalid-feedback">Please select a valid status.</div>                 
+                </div>                
+              </div>
+              <div class="mb-3">
+                <label for="tname">Training Name</label>
+                <input type="text" class="form-control" id="tname" required>
+                <div class="invalid-feedback">
+                  Please Enter Training Name.
+                </div>
+              </div>              
+              <div class="row">
+                <div class="col-md-4 mb-3">    
+                  <label for="tcategory">Category</label>
+                  <select id="tcategory" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Category</option>
+                    {% for row in training_category_list %}
+                        <option value="{{row['category']}}">{{row['category']}}</option>
+                    {% endfor %}                    
+                  </select>                    
+                  <div class="invalid-feedback">
+                    Please Enter Training Category
+                  </div>        
+                </div>
+                <div class="col-md-4 mb-3">              
+                  <label for="cyear">Completion Year</label>
+                  <select id="cyear" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Completion Year</option>                    
+                  </select>        
+                  <div class="invalid-feedback">
+                    Please Enter Completion Year
+                  </div>                                 
+                </div> 
+                <div class="col-md-4 mb-3">              
+                  <label for="tquarter">Quarter</label>
+                  <select id="tquarter" class="form-select" aria-label="Default select example" required>
+                    <option value="">Choose Quarter</option>
+                    <option value="Q1">Q1</option>
+                    <option value="Q2">Q2</option>
+                    <option value="Q3">Q3</option>
+                    <option value="Q4">Q4</option>
+                  </select>                     
+                  <div class="invalid-feedback">
+                    Please Enter Quarter Details
+                  </div>  
+
+                </div>                    
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="no_of_days">No of Days</label>
+                  <input type="number" class="form-control" id="no_of_days" placeholder="" value="" required="">
+                  <div class="invalid-feedback">
+                    Please Enter No of Days
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="hours">Hours(HH)</label>
+                  <input type="number" class="form-control" id="hours" placeholder="" value="" required="">
+                  <div class="invalid-feedback">
+                    Please Enter Valid Hours
+                  </div>
+                </div>
+              </div>  
+            </div>         
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block submitbtn mb-4 training_form certification_form" type="submit">Submit</button>
+          </form>
+          
+          <div class="report-data">
+            {% if is_admin %}
+              <div class="col-md-12 mb-3">
+
+                <h5 class="text-center"> Reports </h5>
+                <div class="accordion mb-4  border border-info rounded frame_border " id="datatable">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading_certificate">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_certification" aria-expanded="false" aria-controls="collapse_certification">
+                        Certifications
+                      </button>
+                    </h2>
+                    <div id="collapse_certification" class="accordion-collapse collapse" aria-labelledby="heading_certificate" data-bs-parent="#datatable">
+                      <div class="accordion-body">
+                          <table class="table">
+                            <tbody class="certification_tbody">
+                                <table class="display certification_datatable" style="width:100%">
+                                  <thead>
+                                      <tr>
+                                          <th>ID</th>
+                                          <th>Name</th>
+                                          <th>Grade</th>
+                                          <th>Project</th>
+                                          <th>Manager</th>
+                                          <th>Certification</th>
+                                          <th>Status</th>
+                                          <th>Certification Name</th>
+                                          <th>Institution</th>
+                                          <th>Intellect</th>
+                                          <th>Year</th>
+                                          <th>Quarter</th>
+                                          <th>Category</th>
+                                          <th>Sponsored</th>
+                                          <th>Type</th>
+                                          <th>Cost</th>
+                                          <th>Expiry</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+    
+                                      {% for value in certifications %}
+                                          <tr>
+                                            <td>{{value.employee_id}}</td>
+                                            <td>{{value.employee_name}}</td>
+                                            <td>{{value.grade}}</td>
+                                            <td>{{value.project}}</td>
+                                            <td>{{value.reporting_manager}}</td>
+                                            <td>{{value.certification}}</td>
+                                            <td>{{value.status}}</td>
+                                            <td>{{value.certificatio_name}}</td>
+                                            <td>{{value.institution_name}}</td>
+                                            <td>{{value.intellect}}</td>
+                                            <td>{{value.completion_year}}</td>
+                                            <td>{{value.quarter}}</td>
+                                            <td>{{value.category}}</td>
+                                            <td>{{value.sponsored}}</td>
+                                            <td>{{value.type}}</td>
+                                            <td>{{value.cost}}</td>
+                                            <td>{{value.expiry}}</td>
+                                          </tr>
+                                      {% endfor %}                    
+
+                                     
+                                  </tbody>
+                                </table>                                                         
+                            </tbody>
+                          </table>                           
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="training_data_accord">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#training_data_collapse" aria-expanded="false" aria-controls="training_data_collapse">
+                        Trainings
+                      </button>
+                    </h2>
+                    <div id="training_data_collapse" class="accordion-collapse collapse" aria-labelledby="training_data_accord" data-bs-parent="#training_data_accord">
+                      <div class="accordion-body">
+                          <table class="table">
+                            <tbody class="training_tbody">
+                                <table class="display training_datatable" style="width:100%">
+                                  <thead>
+                                      <tr>
+                                          <th>ID</th>
+                                          <th>Name</th>
+                                          <th>Grade</th>
+                                          <th>Project</th>
+                                          <th>Manager</th>
+                                          <th>Training</th>
+                                          <th>Training Name</th>
+                                          <th>Status</th>
+                                          <th>Category</th>
+                                          <th>Year</th>
+                                          <th>Quarter</th>
+                                          <th>No of Days</th>
+                                          <th>Hours</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      {% for value in trainings %}
+                                        <tr>
+                                          <td>{{value.employee_id}}</td>
+                                          <td>{{value.employee_name}}</td>
+                                          <td>{{value.grade}}</td>
+                                          <td>{{value.project}}</td>
+                                          <td>{{value.reporting_manager}}</td>
+                                          <td>{{value.training}}</td>
+                                          <td>{{value.training_name}}</td>
+                                          <td>{{value.status}}</td>
+                                          <td>{{value.category}}</td>
+                                          <td>{{value.completion_year}}</td>
+                                          <td>{{value.quarter}}</td>
+                                          <td>{{value.no_of_days}}</td>
+                                          <td>{{value.hours}}</td>
+                                        </tr>                                    
+                                      {% endfor %}    
+                                     
+                                  </tbody>
+                                </table>                                                         
+                            </tbody>
+                          </table>  
+                      </div>
+                    </div>
+                  </div>
+                 
+                </div>
+
+                <h5 class="text-center"> Metrics </h5>
+
+                <div class="accordion mb-4  border border-info rounded frame_border" id="asset_download">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="intellect_d">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#incollapseAsset" aria-expanded="false" aria-controls="incollapseAsset">
+                        Project Vs Before/After Intellect
+                      </button>
+                    </h2>
+                    <div id="incollapseAsset" class="accordion-collapse collapse" aria-labelledby="intellect_d" data-bs-parent="#asset_download">
+                      <div class="accordion-body">
+                         <canvas id="intellect_chart" style="width:100%; max-height:350px;"></canvas>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="cost_chart">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#costcollapseAsset" aria-expanded="false" aria-controls="costcollapseAsset">
+                        Project Vs Cost
+                      </button>
+                    </h2>
+                    <div id="costcollapseAsset" class="accordion-collapse collapse" aria-labelledby="cost_chart" data-bs-parent="#asset_download">
+                      <div class="accordion-body">
+                          <canvas id="proj_cost_chart" style="width:100%; max-height:350px;"></canvas>                        
+                      </div>
+                    </div>
+                  </div>                  
+                 
+                </div>
+
+
+                <h5 class="text-center"> Downloads </h5>
+
+                <div class="accordion mb-4  border border-info rounded frame_border" id="asset_download">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="download_asset">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAsset" aria-expanded="false" aria-controls="collapseAsset">
+                        Assets
+                      </button>
+                    </h2>
+                    <div id="collapseAsset" class="accordion-collapse collapse" aria-labelledby="download_asset" data-bs-parent="#asset_download">
+                      <div class="accordion-body">
+                          <table class="table">
+                            <tbody class="certification_tbody">
+                              <a href="/download/certification" class="btn btn-primary mr-4" style="
+                              margin-right: 20px;" role="button" target="_blank">Download All Certifications</a>
+                              <a href="/download/training" class="btn btn-primary" role="button" target="_blank">Download All Trainings</a>                                                         
+                            </tbody>
+                          </table>                           
+                      </div>
+                    </div>
+                  </div>
+                 
+                </div>
+
+
+                
+              </div>            
+              {% endif %} 
+          </div>
+          
+
+        </div>
+        <!-- <div class="col-md-2 order-md-1"></div> -->
+      </div>
+
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <!-- <p class="mb-1">© 2017-2018 Company Name</p> -->
+        <!-- <ul class="list-inline">
+          <li class="list-inline-item"><a href="#">Privacy</a></li>
+          <li class="list-inline-item"><a href="#">Terms</a></li>
+          <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul> -->
+      </footer>
+    </div>    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0-rc"></script>
+
+    <script type="text/javascript">
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function () {
+        'use strict'
+
+        // $('.certification_datatable thead tr')
+        //     .clone(true)
+        //     .addClass('filters')
+        //     .appendTo('.certification_datatable thead');
+     
+        {% if is_admin %}
+        var table = $('.certification_datatable').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true,
+            initComplete: function () {
+                var api = this.api();
+     
+                // For each column
+                api
+                    .columns()
+                    .eq(0)
+                    .each(function (colIdx) {
+                        // Set the header cell to contain the input element
+                        var cell = $('.filters th').eq(
+                            $(api.column(colIdx).header()).index()
+                        );
+                        var title = $(cell).text();
+                        $(cell).html('<input type="text" placeholder="' + title + '" />');
+     
+                        // On every keypress in this input
+                        $(
+                            'input',
+                            $('.filters th').eq($(api.column(colIdx).header()).index())
+                        )
+                            .off('keyup change')
+                            .on('change', function (e) {
+                                // Get the search value
+                                $(this).attr('title', $(this).val());
+                                var regexr = '({search})'; //$(this).parents('th').find('select').val();
+     
+                                var cursorPosition = this.selectionStart;
+                                // Search the column for that value
+                                api
+                                    .column(colIdx)
+                                    .search(
+                                        this.value != ''
+                                            ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                            : '',
+                                        this.value != '',
+                                        this.value == ''
+                                    )
+                                    .draw();
+                            })
+                            .on('keyup', function (e) {
+                                e.stopPropagation();
+     
+                                $(this).trigger('change');
+                                $(this)
+                                    .focus()[0]
+                                    .setSelectionRange(cursorPosition, cursorPosition);
+                            });
+                    });
+            },
+        });
+        {% endif %}
+        
+
+        // $('.training_datatable thead tr')
+        //     .clone(true)
+        //     .addClass('filters')
+        //     .appendTo('.training_datatable thead');
+     
+        {% if is_admin %}
+        var table = $('.training_datatable').DataTable({
+            orderCellsTop: true,
+            fixedHeader: true,
+            initComplete: function () {
+                var api = this.api();
+     
+                // For each column
+                api
+                    .columns()
+                    .eq(0)
+                    .each(function (colIdx) {
+                        // Set the header cell to contain the input element
+                        var cell = $('.filters th').eq(
+                            $(api.column(colIdx).header()).index()
+                        );
+                        var title = $(cell).text();
+                        $(cell).html('<input type="text" placeholder="' + title + '" />');
+     
+                        // On every keypress in this input
+                        $(
+                            'input',
+                            $('.filters th').eq($(api.column(colIdx).header()).index())
+                        )
+                            .off('keyup change')
+                            .on('change', function (e) {
+                                // Get the search value
+                                $(this).attr('title', $(this).val());
+                                var regexr = '({search})'; //$(this).parents('th').find('select').val();
+     
+                                var cursorPosition = this.selectionStart;
+                                // Search the column for that value
+                                api
+                                    .column(colIdx)
+                                    .search(
+                                        this.value != ''
+                                            ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                            : '',
+                                        this.value != '',
+                                        this.value == ''
+                                    )
+                                    .draw();
+                            })
+                            .on('keyup', function (e) {
+                                e.stopPropagation();
+     
+                                $(this).trigger('change');
+                                $(this)
+                                    .focus()[0]
+                                    .setSelectionRange(cursorPosition, cursorPosition);
+                            });
+                    });
+            },
+        });     
+        {% endif %}   
+
+        // Chart.register(ChartDataLabels);
+
+
+        {% if is_admin %}
+        const intellectctx = document.getElementById('intellect_chart').getContext('2d');
+        const intellect_chart = new Chart(intellectctx, {
+            type: 'bar',
+            data: {
+                labels: [{% for row in reports['intellect']['project_list'] %} "{{row}}", {% endfor %}],
+                datasets: [{
+                    label: 'Before Intellect',
+                    data: {{reports['intellect']['before_intellect_list']}},
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                },{
+                    label: 'After Intellect',
+                    data: {{reports['intellect']['after_intellect_list']}},
+                    backgroundColor: [
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                  // datalabels: {
+                    // align: 'end',
+                    // formatter: (val) => (`${val}`),
+                    // labels: {
+                    //   value: {
+                    //     color: 'blue'
+                    //   }
+                    // }
+
+                  // }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,responsive:false
+                    }
+                }
+            }
+        });
+        {% endif %}
+
+
+        {% if is_admin %}
+        const proj_cost_chartctx = document.getElementById('proj_cost_chart').getContext('2d');
+        const proj_cost__chart = new Chart(proj_cost_chartctx, {
+            type: 'bar',
+            data: {
+                labels: [{% for row in reports['project_cost']['project_list'] %} "{{row}}", {% endfor %}],
+                datasets: [{
+                    label: 'Cost',
+                    data: {{reports['project_cost']['cost']}},
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                tooltips: {
+                  intersect: false,
+                },              
+                scales: {
+                    y: {
+                        beginAtZero: true,responsive:false
+                    }
+                },
+            }
+        });
+        {% endif %}
+
+
+
+        $( ".training_form" ).hide();
+        $(".report-data").hide();
+        $( ".certification_form" ).show();
+
+         $('#expiry').append($('<option>', { 
+                value: 'Life Time',
+                text : 'Life Time' 
+          }));                 
+
+
+        for (var n = 2000; n <= new Date().getFullYear() + 3;  n++){          
+           $('#year').append($('<option>', { 
+                  value: n,
+                  text : n 
+            }));   
+           $('#cyear').append($('<option>', { 
+                  value: n,
+                  text : n 
+            })); 
+
+           $('#expiry').append($('<option>', { 
+                  value: n,
+                  text : n 
+            }));                 
+        }
+   
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+          .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+
+              if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+
+              form.classList.add('was-validated')
+            }, false)
+          });
+
+          $('input[type=radio][name=form_radio]').change(function() {
+              if (this.value == 'certification_radio') {
+                  $( ".training_form" ).hide();
+                  $(".report-data").hide();
+                  $( ".certification_form" ).show();
+                  $("#radio_option").val('certification');
+              }
+              else if (this.value == 'training_radio') {
+                  $( ".certification_form" ).hide();
+                  $( ".training_form" ).show();
+                  $(".report-data").hide();
+                  $("#radio_option").val('training');
+              } else if (this.value == 'report_radio') {
+
+                  {% if is_admin %}
+                    $( ".certification_form" ).hide();
+                    $( ".training_form" ).hide();
+                    $(".report-data").show();
+                    $("#radio_option").val('report');
+                  {% else %}
+                    admin_error()
+                    $('#certification_radio').trigger('click');
+                  {% endif %}                
+
+              }
+          });
+
+          var availableTags = [
+              {% for emp in employees %}
+                  "{{emp['employee_id']}}",
+              {% endfor %}
+          ];  
+
+          var emp_data = JSON.parse($("<div/>").html("{{employees_json}}").text());
+
+          // $( "#empid" ).keyup(function() {
+          //   update_employee_details(null, null, $(this).val());
+          // });
+
+          function update_employee_details(e, ui, a=null){
+              var onselectid = "";
+              if(ui){
+                onselectid = ui.item.value;
+              }
+              var keyupid = a;
+              var id = "";
+              if(onselectid){
+                id = onselectid
+              }else{
+                id = keyupid
+              }
+              console.log(id)
+              var data = $(emp_data).filter(function (i,n){
+                return n.employee_id===id;
+              });    
+              try{
+                console.log(data)    
+                $('#empname').val(data[0].employee_name);
+                $('#grade').val(data[0].grade);
+                $('#project').val(data[0].project);
+                $('#rmanager').val(data[0].reporting_manager);
+              }catch(err){
+                console.log('Employee ID not found, Please try again')
+              }
+          }
+
+          function admin_error() {
+            swal({
+                     title: "Error!",
+                     text: "Admin access required, Please contact support",
+                     type: "warning",
+                     timer: 2000
+             });              
+          }
+
+          $('.grade-edit').click(function(){
+            {% if is_admin %}
+            $("#grade").attr("readonly", false);
+            {% else %}
+              admin_error()
+            {% endif %}
+          });
+          $('.name-edit').click(function(){
+            {% if is_admin %}            
+            $("#empname").attr("readonly", false);
+            {% else %}
+              admin_error()
+            {% endif %}            
+          });
+          $('.project-edit').click(function(){
+            {% if is_admin %}
+            $("#project").attr("readonly", false);
+            {% else %}
+              admin_error()
+            {% endif %}            
+          });
+          $('.manager-edit').click(function(){
+            {% if is_admin %}
+            $("#rmanager").attr("readonly", false);
+            {% else %}
+              admin_error()
+            {% endif %}            
+          });                              
+
+
+          $( "#empid" ).autocomplete({
+            source: availableTags,
+            select : update_employee_details
+          });      
+
+          $('#input_form').submit(function() {
+
+              var payload = new Object();
+              payload.employee_id = $('#empid').val();
+
+              if($('#radio_option').val() == 'certification'){
+                  payload.employee_name = $('#empname').val();
+                  payload.grade = $('#grade').val();
+                  payload.project = $('#project').val();
+                  payload.reporting_manager = $('#rmanager').val();
+                  payload.data_type = 'certification';
+                  payload.certification = $('#certification_option').find(":selected").val();
+                  payload.status = $('#certification_status').find(":selected").val();
+                  payload.certificatio_name = $('#cname').val();
+                  payload.institution_name = $('#iname').val();
+                  payload.intellect = $('#intellect').find(":selected").val();
+                  payload.completion_year = $('#year').find(":selected").val();
+                  payload.quarter = $('#quarter').find(":selected").val();
+                  payload.category = $('#category').find(":selected").val();
+                  payload.sponsored = $('#sponsored').find(":selected").val();
+                  payload.type = $('#type').find(":selected").val();
+                  payload.cost = $('#cost').val();
+                  payload.expiry = $('#expiry').find(":selected").val();
+              }else if ($('#radio_option').val() == 'training'){
+                  payload.employee_name = $('#empname').val();
+                  payload.grade = $('#grade').val();
+                  payload.project = $('#project').val();
+                  payload.reporting_manager = $('#rmanager').val();
+                  payload.data_type = 'training';
+                  payload.training = $('#training_option').find(":selected").val();
+                  payload.status = $('#training_status').find(":selected").val();
+                  payload.training_name = $('#tname').val();
+                  payload.category = $('#tcategory').find(":selected").val();
+                  payload.completion_year = $('#cyear').find(":selected").val();
+                  payload.quarter = $('#tquarter').find(":selected").val();
+                  payload.no_of_days = $('#no_of_days').val();
+                  payload.hours = $('#hours').val();
+              };
+
+
+              console.log(payload);
+
+              var is_form_valid = true;
+              $.each(payload, function (key, value) {
+                  if(value == "" || value.length < 1 || value == null){
+                    is_form_valid = false;                  
+                  }
+              });              
+              if(is_form_valid == false){
+                swal({
+                     title: "Error!",
+                     text: "You should check in on some of those fields below.",
+                     type: "warning",
+                     timer: 2000
+                     });
+              }else{
+
+                if($('#radio_option').val() == 'report'){
+
+                  $.ajax({
+                      type: 'POST',
+                      contentType: 'application/json',
+                      url: '/get_emp_details',
+                      dataType : 'json',
+                      data : JSON.stringify(payload),
+                      success : (data) => {
+                          $(".report-data").show();
+                          if(data.user_certifications.length > 0){  
+                            $(".certification_tbody").empty();
+                            $(".certification_tbody").append('<tr><th>ID</th><th>Name</th><th>Grade</th><th>Project</th><th>Manager</th><th>Certification</th><th>Certification Name</th><th>Institution</th><th>Intellect</th><th>Year</th><th>Quarter</th><th>Category</th><th>Sponsored</th><th>Type</th><th>Cost</th><th>Expiry</th></tr>'); 
+
+                            $.each(data.user_certifications, function (key, value) {
+                              $(".certification_tbody").append('<tr><td>'+value.employee_id+'</td><td>'+value.employee_name+'</td><td>'+value.grade+'</td><td>'+value.project+'</td><td>'+value.reporting_manager+'</td><td>'+value.certification+'</td><td>'+value.certificatio_name+'</td><td>'+value.institution_name+'</td><td>'+value.intellect+'</td><td>'+value.completion_year+'</td><td>'+value.quarter+'</td><td>'+value.category+'</td><td>'+value.sponsored+'</td><td>'+value.type+'</td><td>'+value.cost+'</td><td>'+value.expiry+'</td></tr>');
+                            })
+                          }else{
+                            $(".certification_tbody").html('<tr><td>No Data Found</td></tr>');
+                          } 
+
+                          if(data.user_trainings.length > 0){  
+                            $(".training_tbody").empty();
+                            $(".training_tbody").append('<tr><th>ID</th><th>Name</th><th>Grade</th><th>Project</th><th>Manager</th><th>Training</th><th>Training Name</th><th>Status</th><th>Category</th><th>Year</th><th>Quarter</th><th>No of Days</th><th>Hours</th></tr>'); 
+
+                            $.each(data.user_trainings, function (key, value) {
+                              $(".training_tbody").append('<tr><td>'+value.employee_id+'</td><td>'+value.employee_name+'</td><td>'+value.grade+'</td><td>'+value.project+'</td><td>'+value.reporting_manager+'</td><td>'+value.training+'</td><td>'+value.training_name+'</td><td>'+value.status+'</td><td>'+value.category+'</td><td>'+value.completion_year+'</td><td>'+value.quarter+'</td><td>'+value.no_of_days+'</td><td>'+value.hours+'</td></tr>');
+                            })
+                          }else{
+                            $(".training_tbody").html('<tr><td>No Data Found</td></tr>');
+                          }                                         
+                      },
+                      error : (data) => {
+                          console.log(data)
+                      }
+                  });  
+
+                }
+                else{
+                  $.ajax({
+                      type: 'POST',
+                      contentType: 'application/json',
+                      url: '/post_data',
+                      dataType : 'json',
+                      data : JSON.stringify(payload),
+                      success : (data) => {
+                          console.log('isChat response: ' + data);
+                          swal("Submitted successfully!!")
+                          .then((value) => {
+                            location.reload();
+                          });                        
+                          
+                      },
+                      error : (data) => {
+                          console.log(data)
+                      }
+                  });                  
+                }
+              }
+
+          });          
+
+      })()      
+    </script>
+  </body>
+</html>
